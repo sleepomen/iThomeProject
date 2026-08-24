@@ -1,0 +1,12 @@
+names:
+- airport
+nc: 1
+roboflow:
+  license: Public Domain
+  project: find-airport
+  url: https://universe.roboflow.com/ian-liu-s-workspace/find-airport/dataset/1
+  version: 1
+  workspace: ian-liu-s-workspace
+test: ../test/images
+train: ../train/images
+val: ../valid/images
