@@ -16,8 +16,8 @@ def train_obb_model():
         device="0",            
         project=str(project_root / "runs" / "train"),
         name="airport_obb_v1", 
-        
-        fliplr=0.5,python
+
+        fliplr=0.5,
         flipud=0.5
     )
 
