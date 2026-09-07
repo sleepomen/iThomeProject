@@ -24,3 +24,6 @@ find-airport-1/train/
 find-airport-1/valid/
 find-airport-1/test/
 *.cache
+find-airport-tiled/train/
+find-airport-tiled/valid/
+find-airport-tiled/test/
