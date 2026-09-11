@@ -1,0 +1,6 @@
+names:
+- airport
+nc: 1
+train: ../train/images
+val: ../valid/images
+test: ../test/images
