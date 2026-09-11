@@ -10,20 +10,42 @@ __pycache__/
 .idea/
 .ipynb_checkpoints/
 
+# 金鑰絕對不進版控
+.env
+.env.*
+!.env.example
+
+# 原始衛星影像
 *.tif
 *.tiff
 *.tfrecord
 
+# 預訓練權重
 yolov8*.pt
 yolo*.pt
 
-runs/**/*.pt
-runs/**/*.onnx
-
-find-airport-1/train/
-find-airport-1/valid/
-find-airport-1/test/
+# 資料集：Find-airport-1 是 Roboflow 下載的，
+# find-airport-tiled 與 find-airport-mixed 是腳本生出來的，三個都能重建
 *.cache
+Find-airport-1/train/
+Find-airport-1/valid/
+Find-airport-1/test/
 find-airport-tiled/train/
 find-airport-tiled/valid/
 find-airport-tiled/test/
+find-airport-mixed/train/
+find-airport-mixed/valid/
+find-airport-mixed/test/
+
+# runs/ 全是訓練與推論的產物（權重、train_batch 預覽圖、PR 曲線、混淆矩陣），
+# 每次重跑都會重新生成，只有文章引用的對照圖需要留著。
+# 新增一天的文章圖時，在下面補一行白名單。
+runs/**
+!runs/**/
+!runs/tiled_check/tiled_labels_check.jpg
+!runs/predict/day20_compare/day20_side_by_side.jpg
+!runs/predict/day21_merge/day21_side_by_side.jpg
+!runs/predict/day22_compare/day22_side_by_side.jpg
+!runs/predict/day23_bands/day23_band_compare.jpg
+!runs/predict/day23_pipeline/day23_side_by_side.jpg
+!runs/predict/day23_pipeline/unique_sources.jpg
