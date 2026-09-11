@@ -8,31 +8,32 @@ Day 21: 診斷 Day 20 留下的「一條跑道被拆成六個框」。
      所以任何以「重疊率」為判準的後處理都不可能把它們縫在一起。
 """
 import itertools
+import sys
 from pathlib import Path
 
 import cv2
 import numpy as np
-import rasterio
 from sahi import AutoDetectionModel
 from sahi.predict import get_sliced_prediction
 from shapely.geometry import Polygon
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from inference.geotiff_io import SENTINEL2_FIRST_THREE, read_geotiff, to_uint8_rgb  # noqa: E402
+from inference.pipeline import enhance  # noqa: E402
 TIF = ROOT / "data" / "raw" / "som_san_air.tif"
 WEIGHT = ROOT / "runs/train/airport_obb_tiled/weights/best.pt"
 SLICE = 320
 
 
 def load_image() -> np.ndarray:
-    """Day 18 的前處理：16-bit 降維 + LAB 空間 CLAHE 局部打光。"""
-    with rasterio.open(str(TIF)) as src:
-        img = np.transpose(src.read([1, 2, 3]), (1, 2, 0))
-    if img.dtype != np.uint8 or img.max() > 255:
-        img = (img / img.max() * 255).astype(np.uint8)
-    lab = cv2.cvtColor(img, cv2.COLOR_RGB2LAB)
-    l, a, b = cv2.split(lab)
-    clahe = cv2.createCLAHE(clipLimit=3.5, tileGridSize=(8, 8))
-    return cv2.cvtColor(cv2.merge((clahe.apply(l), a, b)), cv2.COLOR_LAB2RGB)
+    """
+    Day 18 的前處理，Day 23 起改走 inference/geotiff_io（rasterio 被
+    Smart App Control 擋掉了），行為保持一致以維持與前幾天的可比性。
+    """
+    stack, _ = read_geotiff(TIF)
+    return enhance(to_uint8_rgb(stack, bands=SENTINEL2_FIRST_THREE, stretch="max"))
 
 
 def obb_polygon(pred) -> Polygon:

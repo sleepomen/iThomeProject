@@ -17,28 +17,12 @@ sys.path.insert(0, str(ROOT))
 
 from Tests.test_nmm_postprocess import load_image, SLICE, WEIGHT  # noqa: E402
 from inference.merge_fragments import merge_predictions, obb_polygon  # noqa: E402
+from inference.visualize import GREEN, ORANGE, RED, draw_boxes  # noqa: E402
 
 OUT = ROOT / "runs" / "predict" / "day21_merge"
 
-RED = (60, 60, 235)      # 原始碎框
-GREEN = (90, 220, 90)    # 合併後的跑道
-ORANGE = (40, 150, 245)  # 主軸擬合時被剔除的離群碎片
-
-
-def draw(img, boxes, title):
-    """畫框 + 上方標題列（BGR）。"""
-    canvas = img.copy()
-    for pts, color, label in boxes:
-        pts = np.asarray(pts, dtype=np.int32).reshape(-1, 1, 2)
-        cv2.polylines(canvas, [pts], True, color, 3, cv2.LINE_AA)
-        x, y = pts[0][0]
-        cv2.putText(canvas, label, (int(x), max(int(y) - 8, 18)),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2, cv2.LINE_AA)
-
-    bar = np.zeros((44, canvas.shape[1], 3), dtype=np.uint8)
-    cv2.putText(bar, title, (14, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.75,
-                (255, 255, 255), 2, cv2.LINE_AA)
-    return np.vstack([bar, canvas])
+# 畫框邏輯 Day 23 搬進 inference/visualize.py，這裡保留別名維持相容
+draw = draw_boxes
 
 
 def main():
