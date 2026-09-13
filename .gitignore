@@ -49,3 +49,5 @@ runs/**
 !runs/predict/day23_bands/day23_band_compare.jpg
 !runs/predict/day23_pipeline/day23_side_by_side.jpg
 !runs/predict/day23_pipeline/unique_sources.jpg
+!runs/predict/day24_geo/day24_graticule.jpg
+!runs/predict/day24_geo/day24_zoom.jpg
