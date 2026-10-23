@@ -22,6 +22,7 @@ from sahi.predict import get_sliced_prediction
 from inference.geotiff_io import (
     SENTINEL2_FIRST_THREE, GeoRef, read_geotiff, to_uint8_rgb,
 )
+from inference.geo_utils import pixel_to_lonlat
 from inference.merge_fragments import merge_predictions
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -54,6 +55,12 @@ class PipelineResult:
     georef: GeoRef
     detections: list[Detection] = field(default_factory=list)
     raw_count: int = 0                # 幾何合併`之前`的框數
+
+    def footprint(self) -> list[list[float]]:
+        """Day 26: 影像四個角的 [lon, lat]（左上、右上、右下、左下），寫進資料庫用。"""
+        h, w = self.image.shape[:2]
+        lon, lat = pixel_to_lonlat(self.georef, [0, w, w, 0], [0, 0, h, h])
+        return [[float(a), float(b)] for a, b in zip(lon, lat)]
 
 
 def enhance(rgb: np.ndarray, clip_limit: float = 3.5,

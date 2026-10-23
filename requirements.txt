@@ -1,3 +1,20 @@
-rasterio
+# 影像與 GIS（Day 23 起改用純 Python 的 tifffile；rasterio / pyproj 會被
+# Windows Smart App Control 擋掉，投影改由 inference/geo_utils.py 自己算）
 numpy
 matplotlib
+opencv-python
+tifffile
+imagecodecs
+shapely
+
+# 模型
+ultralytics
+sahi
+roboflow
+
+# Day 25 ~ Day 29：地圖、圖磚、PostGIS、CLI
+folium
+requests
+psycopg2-binary
+python-dotenv
+typer

@@ -126,3 +126,41 @@ def to_uint8_rgb(stack: np.ndarray,
         raise ValueError(f"未知的 stretch 模式: {stretch}")
 
     return np.clip(img, 0, 255).astype(np.uint8)
+
+
+# GeoKey 代碼（GeoTIFF 1.0 規格 §6.3），寫檔時要自己組 GeoKeyDirectory
+_GT_MODEL_TYPE = 1024        # 1 = 投影座標系，2 = 地理座標系（經緯度）
+_GT_RASTER_TYPE = 1025       # 1 = PixelIsArea（座標指的是像素左上角）
+_GEOGRAPHIC_TYPE = 2048
+_PROJECTED_CS_TYPE = 3072
+
+
+def write_geotiff(path: str | Path, rgb: np.ndarray, georef: GeoRef) -> Path:
+    """
+    Day 27: 把 8-bit RGB 與 GeoRef 寫成 GeoTIFF，`read_geotiff` 讀得回來。
+
+    只支援沒有旋轉的仿射矩陣（北朝上），用 ModelPixelScale + ModelTiepoint 存，
+    這是 GDAL 預設的寫法，QGIS 之類的軟體也都認得。
+    """
+    t = georef.transform
+    if t[0, 1] != 0 or t[1, 0] != 0:
+        raise ValueError("仿射矩陣含旋轉，這裡只寫北朝上的影像")
+    if georef.epsg is None:
+        raise ValueError("沒有 EPSG 代碼，寫出去的 GeoTIFF 會沒有座標系統")
+
+    geographic = georef.epsg == 4326
+    keys = [1, 1, 0, 3,                                  # 版本 1.1.0，後面接 3 把鑰匙
+            _GT_MODEL_TYPE, 0, 1, 2 if geographic else 1,
+            _GT_RASTER_TYPE, 0, 1, 1,
+            _GEOGRAPHIC_TYPE if geographic else _PROJECTED_CS_TYPE, 0, 1, georef.epsg]
+
+    extratags = [
+        (33550, "d", 3, (t[0, 0], -t[1, 1], 0.0), False),        # ModelPixelScale
+        (33922, "d", 6, (0.0, 0.0, 0.0, t[0, 2], t[1, 2], 0.0), False),  # ModelTiepoint
+        (34735, "H", len(keys), keys, False),                    # GeoKeyDirectory
+    ]
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tifffile.imwrite(str(path), rgb, photometric="rgb", extratags=extratags,
+                     compression="deflate")
+    return path

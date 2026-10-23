@@ -130,6 +130,46 @@ def lonlat_to_utm(lon, lat, zone: UTMZone):
     return east, north
 
 
+# ---------------- Web Mercator（EPSG:3857） ----------------
+# Day 25 起底圖與 Day 27 的測試影像都來自網路圖磚，圖磚世界用的是 Web Mercator。
+# 它把地球當成`正球體`（半徑 = WGS84 長半軸）來投影，所以跟 UTM 不同，
+# 正逆兩個方向都有封閉解，不需要級數展開。
+WEB_MERCATOR = 3857
+MERCATOR_HALF = np.pi * A           # 20037508.34 m，投影平面的半寬
+
+
+def lonlat_to_mercator(lon, lat):
+    """WGS84 經緯度 -> EPSG:3857 (x, y)。"""
+    lon = np.asarray(lon, dtype=np.float64)
+    lat = np.clip(np.asarray(lat, dtype=np.float64), -85.05112878, 85.05112878)
+    x = A * np.radians(lon)
+    y = A * np.log(np.tan(np.pi / 4 + np.radians(lat) / 2))
+    return x, y
+
+
+def mercator_to_lonlat(x, y):
+    """EPSG:3857 (x, y) -> WGS84 經緯度。"""
+    x = np.asarray(x, dtype=np.float64)
+    y = np.asarray(y, dtype=np.float64)
+    lon = np.degrees(x / A)
+    lat = np.degrees(2 * np.arctan(np.exp(y / A)) - np.pi / 2)
+    return lon, lat
+
+
+def proj_to_lonlat(x, y, epsg: int):
+    """投影座標 -> 經緯度，依 EPSG 分派到 Web Mercator 或 UTM。"""
+    if epsg == WEB_MERCATOR:
+        return mercator_to_lonlat(x, y)
+    return utm_to_lonlat(x, y, zone_from_epsg(epsg))
+
+
+def lonlat_to_proj(lon, lat, epsg: int):
+    """經緯度 -> 投影座標，`proj_to_lonlat` 的反向。"""
+    if epsg == WEB_MERCATOR:
+        return lonlat_to_mercator(lon, lat)
+    return lonlat_to_utm(lon, lat, zone_from_epsg(epsg))
+
+
 def pixel_to_lonlat(georef, col, row):
     """
     像素 (col, row) -> WGS84 (lon, lat)。
@@ -138,7 +178,16 @@ def pixel_to_lonlat(georef, col, row):
     再由這裡的逆投影換成經緯度。
     """
     x, y = georef.pixel_to_proj(col, row)
-    return utm_to_lonlat(x, y, zone_from_epsg(georef.epsg))
+    return proj_to_lonlat(x, y, georef.epsg)
+
+
+def haversine_m(lon1, lat1, lon2, lat2):
+    """兩點之間的大圓距離（公尺），用平均地球半徑，誤差約 0.3%。"""
+    r = 6371008.8
+    p1, p2 = np.radians(lat1), np.radians(lat2)
+    dp, dl = p2 - p1, np.radians(np.asarray(lon2) - np.asarray(lon1))
+    a = np.sin(dp / 2) ** 2 + np.cos(p1) * np.cos(p2) * np.sin(dl / 2) ** 2
+    return 2 * r * np.arcsin(np.sqrt(a))
 
 
 def gmaps_link(lon: float, lat: float) -> str:
@@ -199,7 +248,7 @@ def lonlat_to_pixel(georef, lon, lat):
     GeoRef 存的是 2x3 仿射矩陣，不是方陣沒辦法直接求逆，
     補上一列 [0, 0, 1] 湊成 3x3（齊次座標）之後再反矩陣。
     """
-    x, y = lonlat_to_utm(lon, lat, zone_from_epsg(georef.epsg))
+    x, y = lonlat_to_proj(lon, lat, georef.epsg)
     m = np.vstack([georef.transform, [0.0, 0.0, 1.0]])
     inv = np.linalg.inv(m)
     pts = np.stack([np.asarray(x, dtype=np.float64),
