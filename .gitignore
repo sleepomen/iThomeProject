@@ -37,6 +37,11 @@ find-airport-mixed/train/
 find-airport-mixed/valid/
 find-airport-mixed/test/
 
+# Day 25 起抓的網路圖磚快取與 Day 27/28 生成的場景，都能用腳本重建
+# （*.tif 已經在上面排除，這裡補資料夾本身與色彩對齊版的 manifest）
+data/tiles_cache/
+data/s2cloudless_matched/
+
 # runs/ 全是訓練與推論的產物（權重、train_batch 預覽圖、PR 曲線、混淆矩陣），
 # 每次重跑都會重新生成，只有文章引用的對照圖需要留著。
 # 新增一天的文章圖時，在下面補一行白名單。
@@ -51,3 +56,11 @@ runs/**
 !runs/predict/day23_pipeline/unique_sources.jpg
 !runs/predict/day24_geo/day24_graticule.jpg
 !runs/predict/day24_geo/day24_zoom.jpg
+!runs/predict/day25_map/day25_side_by_side.jpg
+!runs/predict/day25_map/day25_map.html
+!runs/predict/day27_multi/day27_rgb_sheet.jpg
+!runs/predict/day28_errors/day28_label_audit.jpg
+!runs/predict/day28_errors/day28_color_domain.jpg
+!runs/predict/day28_errors/day28_matched_sheet.jpg
+!runs/predict/day30_demo/day30_hcn.jpg
+!runs/predict/day30_demo/hcn.html

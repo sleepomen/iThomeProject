@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_efc1458bd5af11ccf53e23f6d74be75d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_efc1458bd5af11ccf53e23f6d74be75d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_efc1458bd5af11ccf53e23f6d74be75d = L.map(
+                "map_efc1458bd5af11ccf53e23f6d74be75d",
+                {
+                    center: [25.0767, 121.2328],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+
+            
+
+        
+    
+            var tile_layer_26cb54f7939538544c2688c60ee7fd6f = L.tileLayer(
+                "https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/GoogleMapsCompatible/{z}/{y}/{x}.jpg",
+                {
+  "minZoom": 0,
+  "maxZoom": 15,
+  "maxNativeZoom": 15,
+  "noWrap": false,
+  "attribution": "\u003ca href=\"https://s2maps.eu\"\u003eSentinel-2 cloudless\u003c/a\u003e by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2020)",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_26cb54f7939538544c2688c60ee7fd6f.addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+        
+    
+            var tile_layer_1adfb633bd3e1bfcd72df58e04b4c288 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Tiles \u0026copy; Esri \u0026mdash; Esri, Maxar, Earthstar Geographics",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_1adfb633bd3e1bfcd72df58e04b4c288.addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+        
+    
+            var tile_layer_f52cd9601ecdc694ef97f33cc763619e = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; OpenStreetMap contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f52cd9601ecdc694ef97f33cc763619e.addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+        
+    
+            var feature_group_b1efce56edaebb873440e97217c5ee04 = L.featureGroup(
+                {
+}
+            );
+        
+    
+        function geo_json_db79674220f3135e1291d8379742d982_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {"color": "#3498db", "dashArray": "6 4", "fillOpacity": 0.08, "weight": 2};
+            }
+        }
+
+        function geo_json_db79674220f3135e1291d8379742d982_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_db79674220f3135e1291d8379742d982 = L.geoJson(null, {
+                onEachFeature: geo_json_db79674220f3135e1291d8379742d982_onEachFeature,
+            
+                style: geo_json_db79674220f3135e1291d8379742d982_styler,
+            ...{
+}
+        });
+
+        function geo_json_db79674220f3135e1291d8379742d982_add (data) {
+            geo_json_db79674220f3135e1291d8379742d982
+                .addData(data);
+        }
+            geo_json_db79674220f3135e1291d8379742d982_add({"features": [{"geometry": {"coordinates": [[[[121.2295841, 25.0898301], [121.2336145, 25.0937635], [121.2356436, 25.0959204], [121.2356803, 25.0959663], [121.2363628, 25.0963532], [121.236452, 25.0963607], [121.2373111, 25.096191], [121.2374065, 25.0962005], [121.2388664, 25.0973424], [121.2389222, 25.0973861], [121.2401021, 25.0983031], [121.2401535, 25.0983435], [121.2461185, 25.1030289], [121.2479723, 25.1010388], [121.2480313, 25.1010354], [121.2499705, 25.102533], [121.2501248, 25.1023987], [121.2503884, 25.1022726], [121.2501904, 25.0999806], [121.2502846, 25.0996691], [121.2501939, 25.0985213], [121.2500367, 25.0983792], [121.2499112, 25.0983334], [121.2498359, 25.0983142], [121.2497249, 25.0983511], [121.2495968, 25.0984565], [121.2495986, 25.0985559], [121.2493259, 25.0985311], [121.2497257, 25.0951676], [121.2498539, 25.0946875], [121.2500544, 25.0939368], [121.2502456, 25.0933785], [121.2503771, 25.09306], [121.2510132, 25.0918358], [121.2514635, 25.0909433], [121.250801, 25.0906162], [121.25056, 25.090437], [121.2504196, 25.0902716], [121.2500131, 25.0901453], [121.2502822, 25.0897148], [121.2502082, 25.089662], [121.2502872, 25.0890508], [121.2508841, 25.0890613], [121.251337, 25.0890145], [121.2513015, 25.0888353], [121.2509414, 25.0887166], [121.2509542, 25.0886895], [121.2519141, 25.0863436], [121.2517777, 25.0863155], [121.2518572, 25.086191], [121.2527026, 25.0870069], [121.2540376, 25.085577], [121.2546675, 25.0860583], [121.2552264, 25.0850924], [121.2548132, 25.0847507], [121.2551246, 25.0844216], [121.2553236, 25.0841944], [121.2563637, 25.0830086], [121.2548626, 25.0817407], [121.2528598, 25.080154], [121.2526779, 25.0800098], [121.2490504, 25.0771358], [121.2499985, 25.076138], [121.2492598, 25.0755411], [121.2483, 25.0765555], [121.2464284, 25.0750805], [121.2458463, 25.0756922], [121.240483, 25.0714832], [121.2405554, 25.0714212], [121.2408782, 25.0715334], [121.2415037, 25.0708773], [121.2418668, 25.0708294], [121.2418782, 25.0707696], [121.2409332, 25.070436], [121.2409111, 25.0704841], [121.2409965, 25.0705825], [121.2408909, 25.0708676], [121.2408508, 25.0711385], [121.2408156, 25.0712105], [121.2406927, 25.0712886], [121.2404912, 25.071338], [121.240396, 25.0714164], [121.2296141, 25.0629201], [121.2301115, 25.0623647], [121.2300808, 25.0622318], [121.2246898, 25.0579818], [121.2239998, 25.0574321], [121.2233428, 25.0569151], [121.2226773, 25.0564053], [121.2212915, 25.0553111], [121.218202, 25.0561481], [121.2177374, 25.0563051], [121.2171969, 25.0565781], [121.2177016, 25.0569769], [121.2174591, 25.0572421], [121.2174664, 25.0572965], [121.216495, 25.0582816], [121.2165354, 25.0584328], [121.2197449, 25.060278], [121.2200035, 25.0603489], [121.2201204, 25.060381], [121.2201457, 25.0611994], [121.2199878, 25.0617146], [121.2195207, 25.0624414], [121.2194039, 25.0628508], [121.2193434, 25.0635814], [121.2193196, 25.0641436], [121.2192353, 25.0644629], [121.219138, 25.0647019], [121.2189606, 25.0649585], [121.2178267, 25.0662234], [121.2160643, 25.0681624], [121.2150183, 25.0670317], [121.2149907, 25.0670633], [121.2129806, 25.0649358], [121.2129206, 25.0649357], [121.2117128, 25.0661033], [121.2115088, 25.0662271], [121.2102749, 25.0652567], [121.2102013, 25.0652936], [121.2100133, 25.0663298], [121.2099015, 25.0665304], [121.2090953, 25.0674021], [121.2086082, 25.0685725], [121.208193, 25.0688518], [121.2079514, 25.0690126], [121.2074944, 25.069143], [121.2082506, 25.0697635], [121.2063458, 25.0717532], [121.2092432, 25.0740038], [121.2105113, 25.0745824], [121.2108581, 25.0747865], [121.211907, 25.0761769], [121.2141297, 25.0779042], [121.2163349, 25.0796201], [121.2163815, 25.079624], [121.2170054, 25.0790148], [121.2204771, 25.0817374], [121.2213626, 25.0824314], [121.2216124, 25.0826255], [121.2217392, 25.0825834], [121.2217927, 25.0826893], [121.221738, 25.0827196], [121.2295841, 25.0898301]]]], "type": "MultiPolygon"}, "id": "0", "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_db79674220f3135e1291d8379742d982.bindTooltip(
+                `<div>
+                     TPE Taiwan Taoyuan International Airport
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            geo_json_db79674220f3135e1291d8379742d982.addTo(feature_group_b1efce56edaebb873440e97217c5ee04);
+        
+    
+            feature_group_b1efce56edaebb873440e97217c5ee04.addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+        
+    
+            var feature_group_76176449fc4ad17ec70f00df1d0c47df = L.featureGroup(
+                {
+}
+            );
+        
+    
+        function geo_json_be19c59a245ada57ab8f00fac23d7b7d_styler(feature) {
+            switch(feature.properties.n_fragments) {
+                default:
+                    return {"color": "#e74c3c", "fillOpacity": 0.15, "weight": 3};
+            }
+        }
+
+        function geo_json_be19c59a245ada57ab8f00fac23d7b7d_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_be19c59a245ada57ab8f00fac23d7b7d = L.geoJson(null, {
+                onEachFeature: geo_json_be19c59a245ada57ab8f00fac23d7b7d_onEachFeature,
+            
+                style: geo_json_be19c59a245ada57ab8f00fac23d7b7d_styler,
+            ...{
+}
+        });
+
+        function geo_json_be19c59a245ada57ab8f00fac23d7b7d_add (data) {
+            geo_json_be19c59a245ada57ab8f00fac23d7b7d
+                .addData(data);
+        }
+            geo_json_be19c59a245ada57ab8f00fac23d7b7d_add({"features": [{"geometry": {"coordinates": [[[121.24904369479435, 25.099069832181577], [121.24330722072692, 25.105578754411503], [121.20718340811102, 25.079172162893244], [121.21292037772938, 25.072664653584038], [121.24904369479435, 25.099069832181577]]], "type": "Polygon"}, "properties": {"angle_deg": 142.0, "aspect": 5.05, "box_area_km2": 4.32, "center": [121.228112, 25.089122], "coverage": 0.1768, "dist_to_airport_m": 0.0, "dist_to_centroid_m": 1217.607, "gmaps": "https://www.google.com/maps/search/?api=1\u0026query=25.089122,121.228112", "hit": false, "iata": "TPE", "inside_frac": 0.4584, "length_px": 467.3, "model": "airport_obb_mixed", "n_fragments": 2, "score": 0.5067, "source": "som_san_air.tif", "width_px": 92.4}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_be19c59a245ada57ab8f00fac23d7b7d.bindTooltip(
+                `<div>
+                     score 0.51
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_81ad69db72335eff0205d6c18afd175c = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_a2ce63fd0307aff3126f15abc39269cc = $(`<div id="html_a2ce63fd0307aff3126f15abc39269cc" style="width: 100.0%; height: 100.0%;"><table style='font-size:12px'><tr><td><b>score</b></td><td>0.5067</td></tr><tr><td><b>n_fragments</b></td><td>2</td></tr><tr><td><b>angle_deg</b></td><td>142.0</td></tr><tr><td><b>length_px</b></td><td>467.3</td></tr><tr><td><b>width_px</b></td><td>92.4</td></tr><tr><td><b>aspect</b></td><td>5.05</td></tr><tr><td><b>center</b></td><td>[121.228112, 25.089122]</td></tr><tr><td><b>source</b></td><td>som_san_air.tif</td></tr><tr><td><b>model</b></td><td>airport_obb_mixed</td></tr><tr><td><b>iata</b></td><td>TPE</td></tr><tr><td><b>inside_frac</b></td><td>0.4584</td></tr><tr><td><b>coverage</b></td><td>0.1768</td></tr><tr><td><b>dist_to_airport_m</b></td><td>0.0</td></tr><tr><td><b>dist_to_centroid_m</b></td><td>1217.607</td></tr><tr><td><b>box_area_km2</b></td><td>4.32</td></tr><tr><td><b>hit</b></td><td>False</td></tr></table><a href="https://www.google.com/maps/search/?api=1&query=25.089122,121.228112" target="_blank">Google Maps</a></div>`)[0];
+                popup_81ad69db72335eff0205d6c18afd175c.setContent(html_a2ce63fd0307aff3126f15abc39269cc);
+            
+        
+
+        geo_json_be19c59a245ada57ab8f00fac23d7b7d.bindPopup(popup_81ad69db72335eff0205d6c18afd175c)
+        ;
+
+        
+    
+    
+            geo_json_be19c59a245ada57ab8f00fac23d7b7d.addTo(feature_group_76176449fc4ad17ec70f00df1d0c47df);
+        
+    
+            feature_group_76176449fc4ad17ec70f00df1d0c47df.addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+        
+    
+            var marker_69cfc09496f80753e8418d97195b1b29 = L.marker(
+                [25.0767, 121.2328],
+                {
+}
+            ).addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+        
+    
+            var icon_f1deb5a4c158cba131164c496d95e399 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_69cfc09496f80753e8418d97195b1b29.bindTooltip(
+                `<div>
+                     TPE ARP
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_69cfc09496f80753e8418d97195b1b29.setIcon(icon_f1deb5a4c158cba131164c496d95e399);
+            
+    
+            var layer_control_4aef5078722d7c21b772fc12c9c524d7_layers = {
+                base_layers : {
+                    "Sentinel-2 cloudless (10m)" : tile_layer_26cb54f7939538544c2688c60ee7fd6f,
+                    "Esri \u9ad8\u89e3\u6790\u885b\u661f" : tile_layer_1adfb633bd3e1bfcd72df58e04b4c288,
+                    "OpenStreetMap" : tile_layer_f52cd9601ecdc694ef97f33cc763619e,
+                },
+                overlays :  {
+                    "OSM \u6a5f\u5834\u908a\u754c" : feature_group_b1efce56edaebb873440e97217c5ee04,
+                    "\u6a21\u578b\u5075\u6e2c\u6846" : feature_group_76176449fc4ad17ec70f00df1d0c47df,
+                },
+            };
+            let layer_control_4aef5078722d7c21b772fc12c9c524d7 = L.control.layers(
+                layer_control_4aef5078722d7c21b772fc12c9c524d7_layers.base_layers,
+                layer_control_4aef5078722d7c21b772fc12c9c524d7_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_efc1458bd5af11ccf53e23f6d74be75d);
+
+        
+</script>
+</html>
